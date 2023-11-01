@@ -9,7 +9,6 @@
         </div>
 
         <div class="buttons">
-            <button @click="getPokemon">Get Pokemon</button>
             <button @click="getMorePokemon">Get 20 more</button>
         </div>
     </div>
@@ -27,6 +26,10 @@ export default {
     },
     components: {
         PokemonComponent,
+    },
+
+    mounted() {
+        this.getPokemon();
     },
 
     methods: {
