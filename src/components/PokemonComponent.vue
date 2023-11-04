@@ -28,7 +28,7 @@ export default {
     },
     data() {
         return {
-            Liked: [5]
+            Liked: []
         }
     },
     methods: {
@@ -47,22 +47,57 @@ export default {
         },
 
         LikePokemon() {
-            if (this.Liked.includes(this.id)) {
-                this.Liked = this.Liked.filter((id) => id !== this.id);
-            } else {
+            if(this.Liked.includes(this.id)){
+                alert('Ya te gusta este pokemon');
+            }else{
                 this.Liked.push(this.id);
+                let userEmail = localStorage.getItem('user');
+
+                let users = JSON.parse(localStorage.getItem('users'));
+
+                let user = users.find((user) => user.email === userEmail);
+
+                user.Liked.push(this.id);
+
+                localStorage.setItem('users', JSON.stringify(users));
             }
+
         },
 
         DislikePokemon() {
             if (this.Liked.includes(this.id)) {
-                this.Liked = this.Liked.filter((id) => id !== this.id);
+                let userEmail = localStorage.getItem('user');
+
+                let users = JSON.parse(localStorage.getItem('users'));
+
+                let user = users.find((user) => user.email === userEmail);
+
+                let index = user.Liked.indexOf(this.id);
+
+                user.Liked.splice(index, 1);
+
+                localStorage.setItem('users', JSON.stringify(users));
+
+                this.Liked.splice(index, 1);
             } else {
-                this.Liked.push(this.id);
+                alert('No te gusta este pokemon');
+                
             }
         }
     },
 
+    mounted() {
+        if (localStorage.getItem('users')) {
+            let users = JSON.parse(localStorage.getItem('users'));
+            let userEmail = localStorage.getItem('user');
+
+            let user = users.find((user) => user.email === userEmail);
+
+            this.Liked = user.Liked;
+        }else{
+            this.Liked = [];
+        }
+    }
 }
 </script>
 <style>

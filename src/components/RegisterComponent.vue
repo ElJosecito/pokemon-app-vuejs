@@ -1,6 +1,6 @@
 <template lang="">
-    <div>
-        <form action="submit" @submit="HandleSubmit">
+    <div class="register_form">
+        <form action="submit" @submit="HandleSubmit" >
             <input type="email" placeholder="email" @input="HandleEmail"/>
             <input type="password" placeholder="Contraseña" @input="HandlePassword" />
             <input type="password" placeholder="Confirmar Contraseña" @input="HandleConfirmPassword"/>
@@ -39,7 +39,6 @@ export default {
         },
         HandleEmail(e) {
             this.email = e.target.value;
-            // console.log(e.target.value);
         },
         HandlePassword(e) {
             this.password = e.target.value;
@@ -60,10 +59,10 @@ export default {
 
 }
 </script>
-<style lang="">
+<style>
     /* register form styles */
 
-    /* form {
+    .register_form form {
         width: 100%;
         max-width: 500px;
         margin: 20px auto;
@@ -73,8 +72,8 @@ export default {
         box-shadow: 0 0 10px #ddd;
     }
 
-    form input[type="email"],
-    form input[type="password"] {
+    .register_form form input[type="email"],
+    .register_form form input[type="password"] {
         display: block;
         width: 100%;
         padding: 10px;
@@ -84,7 +83,7 @@ export default {
         font-size: 16px;
     }
 
-    form input[type="submit"] {
+    .register_form form input[type="submit"] {
         padding: 10px;
         border: none;
         border-radius: 5px;
@@ -95,14 +94,14 @@ export default {
         cursor: pointer;
     }
 
-    form input[type="submit"]:hover {
+    .register_form form input[type="submit"]:hover {
         background-color: #f2f2f2;
         color: black;
     }
 
-    form input[type="email"]:focus,
-    form input[type="password"]:focus {
+    .register_form form input[type="email"]:focus,
+    .register_form form input[type="password"]:focus {
         outline: none;
-    } */
+    }
     
 </style>
