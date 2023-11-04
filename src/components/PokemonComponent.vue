@@ -1,7 +1,12 @@
 <template lang="">
-    <div class="pokemon_card" @click="showData">
+    <div class="pokemon_card" @dblclick="showData">
         <img :src="img" :alt="name" />
         <h3>{{name}}</h3>
+
+        <font-awesome-icon :icon="['fas', 'heart']" class="heart-filled" v-if="Liked.includes(id)" @click="DislikePokemon"/>
+        <font-awesome-icon :icon="['far', 'heart']" class="heart-filled" v-else @click="LikePokemon"/>
+
+
     </div>
 </template>
 <script>
@@ -12,9 +17,18 @@ export default {
             type: String,
             required: true,
         },
+        id: {
+            type: Number,
+            required: true,
+        },
         img: {
             type: String,
             required: true,
+        }
+    },
+    data() {
+        return {
+            Liked: [5]
         }
     },
     methods: {
@@ -31,10 +45,67 @@ export default {
                 this.$router.push('/');
             }
         },
+
+        LikePokemon() {
+            if (this.Liked.includes(this.id)) {
+                this.Liked = this.Liked.filter((id) => id !== this.id);
+            } else {
+                this.Liked.push(this.id);
+            }
+        },
+
+        DislikePokemon() {
+            if (this.Liked.includes(this.id)) {
+                this.Liked = this.Liked.filter((id) => id !== this.id);
+            } else {
+                this.Liked.push(this.id);
+            }
+        }
     },
 
 }
 </script>
-<style lang="">
-    
+<style>
+.pokemon_card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    padding-bottom: 0;
+    width: 200px;
+    height: 250px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+
+    transition: all 0.3s ease-in-out;
+}
+
+.pokemon_card:hover {
+
+    background-color: #2bc3ff;
+    transform: scale(1.3);
+    transition: all 0.3s ease-in-out;
+}
+
+.pokemon_card img {
+    width: 150px;
+    height: 150px;
+}
+
+.pokemon_card h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: black;
+
+}
+
+.pokemon_card .heart-filled {
+    font-size: 2rem;
+    color: rgb(255, 39, 39);
+}
 </style>
