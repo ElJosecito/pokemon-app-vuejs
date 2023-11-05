@@ -9,7 +9,11 @@
         </div>
         
         <div class="pokemon-card__container">
-            <PokemonComponent class="pokemon-card" v-for="pokemon in allPokemon" :key="pokemon.id" :id="pokemon.id" :name="pokemon.name" :img="pokemon.sprites.front_default" />
+            <PokemonComponent class="pokemon-card"  v-for="pokemon in allPokemon" :key="pokemon.id" :id="pokemon.id" :name="pokemon.name" :img="pokemon.sprites.front_default" />
+        </div>
+
+        <div class="pokemon-card__container" v-if="allPokemon.length === 0">
+            <h1>No se encontraron resultados</h1>
         </div>
 
         <div class="buttons__container">

@@ -2,13 +2,23 @@ import axios from 'axios'
 
 const state = {
   allPokemon: [],
+  allFavPokemon: [],
   counter: 20,
-  Fcounter: 1
+  Fcounter: 1,
+  Loading: false
 }
 
 const mutations = {
   setAllPokemon(state, payload) {
     state.allPokemon = payload
+  },
+
+  setFavorites(state, payload) {
+    state.allFavPokemon = payload
+  },
+
+  setLoading(state, payload) {
+    state.Loading = payload
   },
 
   searchPokemon(state, payload) {
@@ -35,11 +45,38 @@ const actions = {
       }
       context.commit('setAllPokemon', pokemonArray)
     } catch (error) {
+      context.commit('setAllPokemon', [])
       console.error('Error al obtener Pokémon:', error)
-      // Puedes agregar lógica adicional aquí, como mostrar un mensaje de error al usuario.
     }
   },
 
+  async getFavorites(context) {
+    const user = localStorage.getItem('user');
+    const users = JSON.parse(localStorage.getItem('users'));
+    const loggedUser = users.find((u) => u.email === user);
+
+    // Verifica si hay un usuario y si tiene una propiedad 'Liked'
+    if (loggedUser && loggedUser.Liked) {
+      context.commit('setFavorites', loggedUser.Liked);
+
+      try {
+        let pokemonArray = [];
+        for (let i = 0; i < loggedUser.Liked.length; i++) {
+          const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${loggedUser.Liked[i]}`);
+          pokemonArray.push(response.data);
+        }
+
+        context.commit('setFavorites', pokemonArray);
+        context.commit('setLoading', true);
+      } catch (error) {
+        console.error('Error al obtener Pokémon favoritos:', error);
+        context.commit('setFavorites', []);
+      }
+    } else {
+      context.commit('setFavorites', []);
+      context.commit('setLoading', true);
+    }
+  },
   //searchPokemon
   async searchPokemon(context, payload) {
     try {
@@ -50,8 +87,8 @@ const actions = {
 
       context.commit('searchPokemon', pokemonArray)
     } catch (error) {
+      context.commit('searchPokemon', [])
       console.error('Error al obtener Pokémon:', error)
-      // Puedes agregar lógica adicional aquí, como mostrar un mensaje de error al usuario.
     }
   },
 

@@ -15,15 +15,12 @@ export default {
     props: {
         name: {
             type: String,
-            required: true,
         },
         id: {
             type: Number,
-            required: true,
         },
         img: {
             type: String,
-            required: true,
         }
     },
     data() {
@@ -52,9 +49,7 @@ export default {
             }else{
                 this.Liked.push(this.id);
                 let userEmail = localStorage.getItem('user');
-
                 let users = JSON.parse(localStorage.getItem('users'));
-
                 let user = users.find((user) => user.email === userEmail);
 
                 user.Liked.push(this.id);
@@ -67,11 +62,8 @@ export default {
         DislikePokemon() {
             if (this.Liked.includes(this.id)) {
                 let userEmail = localStorage.getItem('user');
-
                 let users = JSON.parse(localStorage.getItem('users'));
-
                 let user = users.find((user) => user.email === userEmail);
-
                 let index = user.Liked.indexOf(this.id);
 
                 user.Liked.splice(index, 1);
@@ -90,9 +82,7 @@ export default {
         if (localStorage.getItem('users')) {
             let users = JSON.parse(localStorage.getItem('users'));
             let userEmail = localStorage.getItem('user');
-
             let user = users.find((user) => user.email === userEmail);
-
             this.Liked = user.Liked;
         }else{
             this.Liked = [];

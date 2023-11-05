@@ -5,6 +5,8 @@ import App from './App.vue'
 import store from './storage'
 import router from './router'
 
+
+//global components
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
 
@@ -28,3 +30,4 @@ app.use(store)
 app.mount('#app')
 
 app.component('font-awesome-icon', FontAwesomeIcon)
+

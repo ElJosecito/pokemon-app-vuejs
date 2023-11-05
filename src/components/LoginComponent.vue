@@ -21,7 +21,7 @@ export default {
         HandleSubmit(e) {
             e.preventDefault();
 
-            //verufy if user exist
+            //verify if user exist
             let users = JSON.parse(localStorage.getItem('users'));
 
             let user = users.find((user) => user.email === this.email);
@@ -29,11 +29,14 @@ export default {
             if (user) {
                 if (user.password === this.password) {
                     localStorage.setItem('user', this.email);
+                    localStorage.setItem('isLogged', true);
                     this.$router.push('/');
                 } else {
+                    localStorage.setItem('isLogged', false);
                     alert('Contraseña incorrecta');
                 }
             } else {
+                localStorage.setItem('isLogged', false);
                 alert('Usuario no encontrado');
             }
 
