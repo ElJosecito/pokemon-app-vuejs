@@ -1,11 +1,7 @@
 <template lang="">
     <div>
         <div class="title-container">
-            <h1>Lista de Pokemon</h1>
-            <form action="submit" @submit="HandleSubmit">
-                <input type="text" placeholder="Buscar pokemon" :value="pokemonName" @input="HandleChange" />
-                <input type="submit" value="Buscar"/>
-            </form>
+            <h1>Lista de Pokemon favoritos</h1>
         </div>
         
         <div>
