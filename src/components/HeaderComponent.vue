@@ -1,43 +1,56 @@
 <template lang="">
     <div>
-    <header>
-        <h1>APP</h1>
-        <ul v-if="isLogged === 'true'">
-            <a href="/">
-                <li>Home</li>
-            </a>
-            <a href="/favorites">
-                <li>Favoritos</li>
-            </a>
-
-            <a v-if="isLogged === 'true'" @click="HandleLogout">
-                <li>Logout</li>
-            </a>
-        </ul>
+        <header>
+    <h1>APP</h1>
+    <ul v-if="isLogged">
+      <router-link to="/">
+        <li>Home</li>
+      </router-link>
+      <router-link to="/favorites" >
+        <li>Favoritos</li>
+      </router-link>
+      <a @click="HandleLogout">
+        <li>Logout</li>
+      </a>
+    </ul>
   </header>
     </div>
 </template>
 <script>
-export default {
+import { mapActions, mapState } from 'vuex';
 
+export default {
 
     data() {
         return {
-            isLogged: localStorage.getItem('isLogged'),
-            user: localStorage.getItem('user'),
-        }
+            Logearse: false,
+        };
     },
 
     methods: {
+        ...mapActions('sessionModule', ['setLogged']),
         HandleLogout() {
-            localStorage.setItem('isLogged', false);
-            localStorage.setItem('user', '');
+            localStorage.setItem('isLogged', 'false');
+            this.setLogged(false);
+            this.$store.state.sessionModule.isLogged // Actualiza el estado localmente
             this.$router.push('/login');
+        },
+        handleStorageChange(event) {
+            if (event.key === 'isLogged') {
+                // Si la clave 'isLogged' cambió en el localStorage
+                this.isLogged = event.newValue === 'true';
+            }
         }
     },
 
+    computed: {
+        ...mapState('sessionModule', ['isLogged'])
+    },
 
-}
+    mounted() {
+        this.Logearse = this.$store.state.sessionModule.isLogged;
+    },
+};
 </script>
 <style>
 header {
@@ -68,15 +81,15 @@ header ul li {
 header ul a li {
     text-decoration: none;
     color: #267cfd;
-    
+
 }
 
-header ul a li:hover{
+header ul a li:hover {
     color: #267cfd;
 }
 
 /* Logout btn */
-header ul a:last-child li{
+header ul a:last-child li {
     margin-left: 2rem;
     padding: 0.5rem 1rem;
     border-radius: 5px;
@@ -87,9 +100,8 @@ header ul a:last-child li{
     cursor: pointer;
 }
 
-header ul a:last-child li:hover{
+header ul a:last-child li:hover {
     background-color: #f2f2f2;
     color: #fd2626;
 }
-
 </style>

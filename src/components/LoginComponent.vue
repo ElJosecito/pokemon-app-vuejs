@@ -11,6 +11,7 @@
     </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex';
 export default {
 
     data() {
@@ -21,6 +22,9 @@ export default {
     },
 
     methods: {
+
+        ...mapActions('sessionModule', ["setLogged"]),
+
         HandleSubmit(e) {
             e.preventDefault();
 
@@ -33,6 +37,7 @@ export default {
                 if (user.password === this.password) {
                     localStorage.setItem('user', this.email);
                     localStorage.setItem('isLogged', true);
+                    this.setLogged(true);
                     this.$router.push('/');
                 } else {
                     localStorage.setItem('isLogged', false);
@@ -52,6 +57,9 @@ export default {
             this.password = e.target.value;
 
         },
+    },
+    computed: {
+        ...mapState('sessionModule', ['isLogged'])
     },
     
 }
