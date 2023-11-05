@@ -4,7 +4,10 @@
             <input type="email" placeholder="email" @input="HandleEmail"/>
             <input type="password" placeholder="Contraseña" @input="HandlePassword" />
             <input type="password" placeholder="Confirmar Contraseña" @input="HandleConfirmPassword"/>
-            <input type="submit" value="Iniciar sesión" />
+            <input type="submit" value="Crear" />
+
+            <!-- loggearse -->
+            <router-link to="/login">Inicia sesion con tu cuenta!</router-link>
         </form>
     </div>
 </template>
@@ -36,6 +39,9 @@ export default {
             users.push(user);
 
             localStorage.setItem('users', JSON.stringify(users));
+
+            // redirect to login
+            this.$router.push('/login');
         },
         HandleEmail(e) {
             this.email = e.target.value;
@@ -102,6 +108,16 @@ export default {
     .register_form form input[type="email"]:focus,
     .register_form form input[type="password"]:focus {
         outline: none;
+    }
+
+    /* Loogearse text */
+    .register_form form a {
+        display: block;
+        text-align: right;
+        text-decoration: none;
+        color: #267cfd;
+        font-size: 1.2rem;
+        font-weight: 600;
     }
     
 </style>

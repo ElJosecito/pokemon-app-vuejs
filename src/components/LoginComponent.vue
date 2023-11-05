@@ -4,6 +4,9 @@
             <input type="email" placeholder="email" @input="HandleEmail"/>
             <input type="password" placeholder="Contraseña" @input="HandlePassword"/>
             <input type="submit" value="Iniciar sesión" />
+
+            <!-- register -->
+            <router-link to="/register">Crear Cuenta</router-link>
         </form>
     </div>
 </template>
@@ -87,5 +90,15 @@ export default {
         font-size: 16px;
         font-weight: 600;
         cursor: pointer;
+    }
+
+
+    .login_form form a {
+        display: block;
+        text-align: right;
+        text-decoration: none;
+        color: #267cfd;
+        font-size: 1.2rem;
+        font-weight: 600;
     }
 </style>
